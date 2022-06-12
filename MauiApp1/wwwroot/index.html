@@ -17,23 +17,23 @@
 
 	<script type="text/javascript">
 
-        Blazor.start().then(function () {
-            CallCSharp(); // This is not working as expected
-        });
+            Blazor.start().then(function () {
+                CallCSharp(); // This is not working as expected
+            });
 
-		//window.addEventListener('load', (event) => {
-		//		CallCSharp(); // This is not working as expected
-		//});
+            //window.addEventListener('load', (event) => {
+            //    CallCSharp(); // This is not working as expected
+            //});
 
-		function CallCSharp() {
-			try {
-                window.DotNet.invokeMethodAsync('MauiApp1', 'CallMeFromJs', "Hello World").then(result => {
-                    document.getElementById("app").innerHTML = result;
-                });
-			} catch (error) {
-                document.getElementById("app").innerHTML = error;
+            function CallCSharp() {
+		try {
+                    window.DotNet.invokeMethodAsync('MauiApp1', 'CallMeFromJs', "Hello World").then(result => {
+                        document.getElementById("app").innerHTML = result;
+                    });
+		} catch (error) {
+                    document.getElementById("app").innerHTML = error;
+                }
             }
-		}
 
 	</script>
 
