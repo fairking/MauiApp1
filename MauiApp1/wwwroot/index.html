@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+	<title>MauiApp1</title>
+	<base href="/" />
+</head>
+
+<body>
+
+	<div id="app">Loading...</div>
+
+	<button onclick="CallCSharp()">Click</button>
+
+	<script src="_framework/blazor.webview.js" autostart="false"></script>
+
+	<script type="text/javascript">
+
+        Blazor.start().then(function () {
+            CallCSharp(); // This is not working as expected
+		});
+
+		//window.addEventListener('load', (event) => {
+		//		CallCSharp(); // This is not working as expected
+		//});
+
+		function CallCSharp() {
+			window.DotNet.invokeMethodAsync('MauiApp1', 'CallMeFromJs', "Hello World").then(result => {
+                document.getElementById("app").innerHTML = result;
+			});
+		}
+
+	</script>
+
+</body>
+
+</html>
