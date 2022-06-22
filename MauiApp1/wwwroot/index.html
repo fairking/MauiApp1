@@ -17,22 +17,36 @@
 
 	<script type="text/javascript">
 
-		window.addEventListener('load', async (event) => {
-            let heartbeat = 500
-            do {
-                try {
-                    await CallCSharp();
-                    break;
-				} catch (error) {
-                    document.getElementById("app").innerHTML = error + heartbeat;
-                    await new Promise(resolve => setTimeout(resolve, heartbeat));
-                    heartbeat *= 1.5;
-                }
-            } while (true)
+        window.addEventListener("load", function() {
+
+            document.getElementById("app").innerHTML = '';
+
+            try {
+                Blazor.start()
+                    .then(() => {
+                        CallCSharp();
+                    })
+                    .catch((error) => {
+                        document.getElementById("app").innerHTML += error + '<br/>';
+                    });
+            } catch (error) {
+                document.getElementById("app").innerHTML += error + '<br/>';
+            }
+
 		});
 
-		async function CallCSharp() {
-            document.getElementById("app").innerHTML = await window.DotNet.invokeMethodAsync('MauiApp1', 'CallMeFromJs', "Hello World");
+		function CallCSharp() {
+            try {
+                window.DotNet.invokeMethodAsync("MauiApp1", "CallMeFromJs", "Hello World")
+                    .then((result) => {
+                        document.getElementById("app").innerHTML += result + '<br/>';
+                    })
+                    .catch((error) => {
+                        document.getElementById("app").innerHTML += error + '<br/>';
+                    });
+            } catch (error) {
+                document.getElementById("app").innerHTML += error + '<br/>';
+            }
         };
 
 	</script>
